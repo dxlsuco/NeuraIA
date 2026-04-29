@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   HiSparkles,
   HiArrowRight,
@@ -30,29 +31,29 @@ const features = [
     icon: HiChatBubbleLeftRight,
     title: 'IA Empática 24/7',
     desc: 'Conversa imediata quando precisares de apoio emocional, a qualquer hora do dia ou da noite.',
-    iconClass: 'bg-purple-50 text-purple-600',
-    borderClass: 'border-purple-100',
+    iconClass: 'bg-neura-50 text-neura-600',
+    borderClass: 'border-neura-100',
   },
   {
     icon: FaUserDoctor,
     title: 'Psicólogos Certificados',
     desc: 'Profissionais reais disponíveis para sessões de acompanhamento personalizadas.',
-    iconClass: 'bg-soft-blue text-blue-600',
-    borderClass: 'border-blue-100',
+    iconClass: 'bg-neura-100 text-neura-600',
+    borderClass: 'border-neura-100',
   },
   {
     icon: HiShieldCheck,
     title: 'Privacidade Total',
     desc: 'As tuas conversas são encriptadas de ponta a ponta. Nada é partilhado.',
-    iconClass: 'bg-soft-purple text-purple-600',
-    borderClass: 'border-purple-100',
+    iconClass: 'bg-neura-50 text-neura-600',
+    borderClass: 'border-neura-100',
   },
   {
     icon: HiHeart,
     title: 'Sem Julgamentos',
     desc: 'Um espaço livre e seguro para seres tu mesmo, sem pressões nem expectativas.',
-    iconClass: 'bg-soft-pink text-pink-600',
-    borderClass: 'border-pink-100',
+    iconClass: 'bg-neura-100 text-neura-600',
+    borderClass: 'border-neura-100',
   },
 ];
 
@@ -78,6 +79,7 @@ const testimonials = [
 ];
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   const [chatOpen, setChatOpen] = useState(false);
   const [input, setInput] = useState('');
   const [replyIdx, setReplyIdx] = useState(0);
@@ -104,37 +106,37 @@ export default function LandingPage() {
   }, [messages]);
 
   return (
-    <div className="min-h-screen bg-warm-50">
+    <div className="min-h-screen bg-neura-50">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
         * { font-family: 'DM Sans', sans-serif; }
         .font-display { font-family: 'Lora', Georgia, serif; }
         .chat-msgs::-webkit-scrollbar { width: 3px; }
-        .chat-msgs::-webkit-scrollbar-thumb { background: #bbf7d0; border-radius: 4px; }
+        .chat-msgs::-webkit-scrollbar-thumb { background: #d9cec1; border-radius: 4px; }
       `}</style>
 
       {/* ── NAV ── */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-100/60">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neura-100/60">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-8 h-8 bg-gradient-to-br from-neura-500 to-neura-700 rounded-xl flex items-center justify-center shadow-sm">
               <HiSparkles className="text-white" size={14} />
             </div>
-            <span className="font-display font-semibold text-xl text-purple-900 tracking-tight">Neura</span>
+            <span className="font-display font-semibold text-xl text-neura-900 tracking-tight">Neura</span>
           </div>
 
           <div className="hidden md:flex items-center gap-8">
             {['Recursos', 'Psicólogos', 'Como funciona', 'Preços'].map(l => (
-              <a key={l} href="#" className="text-sm text-gray-500 hover:text-purple-700 transition-colors">{l}</a>
+              <a key={l} href="#" className="text-sm text-gray-500 hover:text-neura-700 transition-colors">{l}</a>
             ))}
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="text-sm text-gray-600 hover:text-purple-700 transition-colors px-4 py-2 rounded-xl hover:bg-purple-50">
-              Entrar
-            </button>
-            <button className="text-sm font-medium bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-xl transition-colors shadow-sm">
+            <button onClick={() => navigate('/onboarding')} className="text-sm text-gray-600 hover:text-neura-700 transition-colors px-4 py-2 rounded-xl hover:bg-neura-50">
               Começar grátis
+            </button>
+            <button onClick={() => navigate('/entrar')} className="text-sm font-medium bg-neura-600 hover:bg-neura-700 text-white px-5 py-2.5 rounded-xl transition-colors shadow-sm">
+              Entrar
             </button>
           </div>
         </div>
@@ -146,14 +148,14 @@ export default function LandingPage() {
 
           {/* Left */}
           <div className="space-y-7">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-50 border border-purple-200 rounded-full text-purple-700 text-xs font-medium">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-neura-50 border border-neura-200 rounded-full text-neura-700 text-xs font-medium">
               <HiSparkles size={11} />
               Apoio emocional inteligente e humano
             </div>
 
             <h1 className="font-display text-5xl lg:text-[3.5rem] leading-[1.1] text-gray-900 tracking-tight">
               Não estás<br />
-              <span className="text-purple-600 italic">sozinho.</span>
+              <span className="text-neura-600 italic">sozinho.</span>
             </h1>
 
             <p className="text-lg text-gray-400 leading-relaxed max-w-md">
@@ -162,12 +164,12 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-wrap gap-3">
-              <button className="flex items-center gap-2 px-6 py-3.5 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-medium text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-purple-200/60">
+              <button onClick={() => navigate('/entrar')} className="flex items-center gap-2 px-6 py-3.5 bg-neura-600 hover:bg-neura-700 text-white rounded-2xl font-medium text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-neura-200/60">
                 Começar agora <HiArrowRight size={14} />
               </button>
-              <button className="flex items-center gap-2 px-6 py-3.5 bg-white border border-gray-200 hover:border-purple-300 text-gray-700 rounded-2xl font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
-                <HiVideoCamera size={14} className="text-purple-500" />
-                Falar com psicólogo
+              <button onClick={() => navigate('/onboarding')} className="flex items-center gap-2 px-6 py-3.5 bg-white border border-gray-200 hover:border-neura-300 text-gray-700 rounded-2xl font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
+                <HiChatBubbleLeftRight size={14} className="text-neura-500" />
+                Experimentar a IA
               </button>
             </div>
 
@@ -178,7 +180,7 @@ export default function LandingPage() {
                 { icon: HiCheckCircle, label: 'Sem julgamentos' },
               ].map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-2 px-3.5 py-2 bg-white border border-gray-100 rounded-lg text-xs text-gray-400 shadow-sm">
-                  <Icon size={12} className="text-purple-400" />
+                  <Icon size={12} className="text-neura-400" />
                   {label}
                 </div>
               ))}
@@ -186,7 +188,7 @@ export default function LandingPage() {
 
             <div className="flex items-center gap-3 pt-1">
               <div className="flex -space-x-2">
-                {['bg-neura-400', 'bg-blue-400', 'bg-pink-400', 'bg-amber-400'].map((c, i) => (
+                {['bg-neura-400', 'bg-neura-300', 'bg-neura-200', 'bg-neura-100'].map((c, i) => (
                   <div key={i} className={`w-8 h-8 rounded-full ${c} border-2 border-white`} />
                 ))}
               </div>
@@ -198,27 +200,27 @@ export default function LandingPage() {
 
           {/* Right */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-pink-50 rounded-4xl -rotate-2 scale-105 opacity-70" />
-            <div className="relative rounded-4xl overflow-hidden shadow-2xl shadow-purple-100/80">
+            <div className="absolute inset-0 bg-gradient-to-br from-neura-100 to-neura-50 rounded-4xl -rotate-2 scale-105 opacity-70" />
+            <div className="relative rounded-4xl overflow-hidden shadow-2xl shadow-neura-100/80">
               <img
                 src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=900&q=85"
                 alt="Equipa de psicólogos"
                 className="w-full h-[480px] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neura-900/50 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-neura-800/50 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
-                      <HiUserGroup size={18} className="text-purple-600" />
+                    <div className="w-10 h-10 bg-neura-100 rounded-xl flex items-center justify-center">
+                      <HiUserGroup size={18} className="text-neura-600" />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-800">Equipa clínica certificada</p>
                       <p className="text-xs text-gray-400">Disponível 7 dias por semana</p>
                     </div>
                     <div className="ml-auto flex items-center gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-                      <span className="text-xs text-purple-600 font-medium">Online</span>
+                      <div className="w-2 h-2 rounded-full bg-neura-500 animate-pulse" />
+                      <span className="text-xs text-neura-600 font-medium">Online</span>
                     </div>
                   </div>
                 </div>
@@ -232,7 +234,7 @@ export default function LandingPage() {
       <section className="bg-white border-y border-gray-100/80 py-24">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <p className="text-xs font-semibold text-purple-600 uppercase tracking-widest mb-3">O que oferecemos</p>
+            <p className="text-xs font-semibold text-neura-600 uppercase tracking-widest mb-3">O que oferecemos</p>
             <h2 className="font-display text-4xl text-gray-900 tracking-tight">Tudo o que precisas,<br />num só lugar</h2>
           </div>
 
@@ -251,18 +253,18 @@ export default function LandingPage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section className="py-24 bg-warm-50">
+      <section className="py-24 bg-neura-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-xs font-semibold text-purple-600 uppercase tracking-widest mb-3">Como funciona</p>
+            <p className="text-xs font-semibold text-neura-600 uppercase tracking-widest mb-3">Como funciona</p>
             <h2 className="font-display text-4xl text-gray-900 tracking-tight">Simples como deve ser</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-12">
             {[
-              { step: '01', title: 'Cria a tua conta', desc: 'Registo gratuito em menos de um minuto, sem cartão de crédito.', color: 'text-purple-400' },
-              { step: '02', title: 'Fala como te sentes', desc: 'Começa com a nossa IA empática ou agenda diretamente com um psicólogo.', color: 'text-indigo-300' },
-              { step: '03', title: 'Encontra o apoio certo', desc: 'Acompanhamento contínuo, ao teu ritmo, no teu horário.', color: 'text-violet-300' },
+              { step: '01', title: 'Cria a tua conta', desc: 'Registo gratuito em menos de um minuto, sem cartão de crédito.', color: 'text-neura-400' },
+              { step: '02', title: 'Fala como te sentes', desc: 'Começa com a nossa IA empática ou agenda diretamente com um psicólogo.', color: 'text-neura-300' },
+              { step: '03', title: 'Encontra o apoio certo', desc: 'Acompanhamento contínuo, ao teu ritmo, no teu horário.', color: 'text-neura-400' },
             ].map(({ step, title, desc, color }) => (
               <div key={step}>
                 <div className={`font-display text-7xl font-semibold ${color} opacity-30 mb-3 leading-none select-none`}>{step}</div>
@@ -278,16 +280,16 @@ export default function LandingPage() {
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <p className="text-xs font-semibold text-purple-600 uppercase tracking-widest mb-3">Testemunhos</p>
+            <p className="text-xs font-semibold text-neura-600 uppercase tracking-widest mb-3">Testemunhos</p>
             <h2 className="font-display text-4xl text-gray-900 tracking-tight">O que dizem sobre nós</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map(({ name, role, text, stars }) => (
-              <div key={name} className="p-7 rounded-3xl border border-gray-100 bg-warm-50 hover:shadow-md transition-shadow">
+              <div key={name} className="p-7 rounded-3xl border border-gray-100 bg-neura-50 hover:shadow-md transition-shadow">
                 <div className="flex gap-0.5 mb-4">
                   {Array.from({ length: stars }).map((_, i) => (
-                    <HiStar key={i} size={13} className="text-amber-400" />
+                    <HiStar key={i} size={13} className="text-amber-500" />
                   ))}
                 </div>
                 <p className="text-sm text-gray-500 leading-relaxed mb-6 italic">"{text}"</p>
@@ -314,7 +316,7 @@ export default function LandingPage() {
             <span className="italic text-neura-200">é sempre o mais difícil.</span>
           </h2>
           <p className="text-neura-300 text-sm">Grátis para começar. Sem compromissos.</p>
-          <button className="inline-flex items-center gap-2 px-8 py-4 bg-white text-neura-700 font-semibold rounded-2xl hover:bg-neura-50 transition-colors shadow-xl text-sm">
+          <button onClick={() => navigate('/onboarding')} className="inline-flex items-center gap-2 px-8 py-4 bg-white text-neura-700 font-semibold rounded-2xl hover:bg-neura-50 transition-colors shadow-xl text-sm">
             Começar agora <HiArrowRight size={15} />
           </button>
         </div>
@@ -378,7 +380,7 @@ export default function LandingPage() {
         {/* Messages */}
         <div
           ref={msgsRef}
-          className="chat-msgs flex-1 overflow-y-auto p-4 bg-warm-50 flex flex-col gap-3"
+          className="chat-msgs flex-1 overflow-y-auto p-4 bg-neura-50 flex flex-col gap-3"
           style={{ minHeight: 200, maxHeight: 280 }}
         >
           {messages.map((m, i) => (
@@ -401,7 +403,7 @@ export default function LandingPage() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && send()}
             placeholder="Escreve como te sentes..."
-            className="flex-1 px-4 py-2.5 bg-warm-50 border border-gray-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-300 outline-none focus:border-neura-300 transition-colors"
+            className="flex-1 px-4 py-2.5 bg-neura-50 border border-gray-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-300 outline-none focus:border-neura-300 transition-colors"
           />
           <button
             onClick={send}

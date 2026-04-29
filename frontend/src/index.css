@@ -15,7 +15,7 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #fefaf6;
+    background-color: #f9f6f3;
     color: #1f2937;
   }
 
@@ -28,37 +28,37 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #fefaf6;
+    background: #f9f6f3;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #86efac;
+    background: #d9cec1;
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #4ade80;
+    background: #c9a880;
   }
 
   ::selection {
-    background-color: #bbf7d0;
-    color: #14532d;
+    background-color: #e8dcc8;
+    color: #3e2f23;
   }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center
-           bg-green-600 text-white px-6 py-3 rounded-2xl font-medium
-           hover:bg-green-700 active:scale-95 
+           bg-neura-600 text-white px-6 py-3 rounded-2xl font-medium
+           hover:bg-neura-700 active:scale-95 
            transition-all duration-200 shadow-lg
            hover:shadow-xl;
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center
-           bg-white text-green-700 px-6 py-3 rounded-2xl font-medium
-           border-2 border-green-200 hover:border-green-300
+           bg-white text-neura-700 px-6 py-3 rounded-2xl font-medium
+           border-2 border-neura-200 hover:border-neura-300
            active:scale-95 transition-all duration-200;
   }
 
@@ -69,7 +69,7 @@
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-green-600 to-green-400 
+    @apply bg-gradient-to-r from-neura-600 to-neura-400 
            bg-clip-text text-transparent;
   }
 
