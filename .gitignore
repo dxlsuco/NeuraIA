@@ -1,135 +1,62 @@
 ################################
-# DEPENDÊNCIAS NODE.JS
+# DEPENDÊNCIAS NODE
 ################################
 node_modules/
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
-backend/node_modules/
-frontend/node_modules/
 
 ################################
 # VARIÁVEIS DE AMBIENTE
 ################################
 .env
-.env.local
 .env.*.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 ################################
-# BUILD E DISTRIBUIÇÃO
+# BUILD
 ################################
-backend/dist/
-backend/build/
-backend/*.tsbuildinfo
-frontend/dist/
-frontend/build/
-frontend/.vite/
+dist/
+build/
+.vite/
+.next/
 
 ################################
-# ARQUIVOS DE LOG
+# LOGS
 ################################
 logs/
 *.log
-npm-debug.log*
-npm-error.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-pnpm-debug.log*
-backend/*.log
-frontend/*.log
 
 ################################
-# IDE E EDITORES
-################################
-.vscode/
-.idea/
-.DS_Store
-.AppleDouble
-.LSOverride
-*.swp
-*.swo
-*~
-*.sublime-project
-*.sublime-workspace
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-.env.local.php
-
-################################
-# SISTEMA OPERACIONAL
-################################
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-################################
-# CACHE E TEMPORÁRIOS
+# CACHE
 ################################
 .cache/
 .eslintcache
 .stylelintcache
-.turbo
-.next/
-.vercel/
+.turbo/
 
 ################################
-# TESTES E COBERTURA
+# TESTES
 ################################
 coverage/
 .nyc_output/
-*.lcov
 
 ################################
-# BACKEND ESPECÍFICO
+# IDE
+################################
+.vscode/
+.idea/
+
+################################
+# SISTEMA
+################################
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+################################
+# BACKEND / FRONTEND ESPECÍFICO (se necessário)
 ################################
 backend/node_modules/
-backend/dist/
-backend/build/
-backend/.env
-backend/.env.local
-backend/logs/
-backend/tmp/
-backend/.turbo/
-backend/tsconfig.tsbuildinfo
-
-################################
-# FRONTEND ESPECÍFICO
-################################
 frontend/node_modules/
-frontend/dist/
-frontend/build/
+backend/.env
 frontend/.env
-frontend/.env.local
-frontend/.vite/
-frontend/coverage/
-
-################################
-# FERRAMENTAS E PLUGINS
-################################
-.git/
-.gitignore
-.DS_Store
-*.pem
-*.key
-*.cert
-*.crt
-
-################################
-# DIVERSOS
-################################
-.turbo/
-.yarn/cache/
-.yarn/unplugged/
-.yarn/build-state.yml
-.yarn/install-state.gz
-*.tgz
-*.tar
-*.zip
