@@ -126,8 +126,16 @@ export default function LandingPage() {
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            {['Recursos', 'Psicólogos', 'Como funciona', 'Preços'].map(l => (
-              <a key={l} href="#" className="text-sm text-gray-500 hover:text-neura-700 transition-colors">{l}</a>
+            {[
+              { label: 'Início', to: '/' },
+              { label: 'Recursos', to: '/recursos' },
+              { label: 'Psicólogos', to: '/psicologos' },
+              { label: 'Como funciona', to: '/como-funciona' },
+              { label: 'Preços', to: '/precos' },
+            ].map(item => (
+              <button key={item.to} onClick={() => navigate(item.to)} className="text-sm text-gray-500 hover:text-neura-700 transition-colors">
+                {item.label}
+              </button>
             ))}
           </div>
 
