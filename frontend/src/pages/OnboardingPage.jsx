@@ -1,72 +1,79 @@
 import { useNavigate } from 'react-router-dom';
-import { HiSparkles, HiArrowRight, HiLockClosed, HiUser } from 'react-icons/hi2';
+import { motion } from 'framer-motion';
+import { ArrowRight, LockKeyhole, ShieldCheck, UserPlus } from 'lucide-react';
+import { BrandLogo, SectionBadge } from '../components/Brand';
+import { BRAND } from '../components/brandTokens';
+
+const options = [
+  {
+    title: 'Modo anónimo',
+    text: 'Conversa sem criar conta. Privacidade total para começar agora.',
+    icon: LockKeyhole,
+    to: '/check-in',
+    featured: false,
+  },
+  {
+    title: 'Criar conta',
+    text: 'Guarda histórico, recebe insights e continua com acompanhamento personalizado.',
+    icon: UserPlus,
+    to: '/entrar',
+    featured: true,
+  },
+];
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-br from-neura-50 to-neura-100 flex flex-col items-center justify-center p-6 overflow-hidden">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
-        * { font-family: 'DM Sans', sans-serif; }
-        .font-display { font-family: 'Lora', Georgia, serif; }
-      `}</style>
+    <div className="min-h-screen bg-[linear-gradient(135deg,#EEF2FF_0%,#F8FAFF_52%,#F5F3FF_100%)] px-4 py-6 text-slate-950 sm:px-6">
+      <div className="mx-auto flex min-h-[calc(100vh-48px)] max-w-7xl flex-col">
+        <BrandLogo onClick={() => navigate('/')} />
 
-      <button
-        onClick={() => navigate('/')}
-        className="absolute top-6 left-6 flex items-center gap-2.5 hover:opacity-75 transition-opacity"
-      >
-        <div className="w-8 h-8 bg-gradient-to-br from-neura-500 to-neura-700 rounded-xl flex items-center justify-center">
-          <HiSparkles className="text-white" size={14} />
-        </div>
-        <span className="font-display font-semibold text-xl text-neura-900">Neura</span>
-      </button>
-
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center space-y-3">
-          <h1 className="font-display text-4xl font-bold text-gray-900">
-            Como gostarias de começar?
-          </h1>
-          <p className="text-gray-500">Escolhe o que funciona melhor para ti</p>
-        </div>
-
-        <div className="space-y-4">
-          <button
-            onClick={() => navigate('/check-in')}
-            className="w-full p-6 bg-white border-2 border-neura-200 hover:border-neura-400 rounded-2xl text-left transition-all hover:shadow-lg hover:-translate-y-1 group"
+        <main className="flex flex-1 items-center justify-center py-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full max-w-2xl"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-neura-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-neura-200 transition-colors">
-                <HiLockClosed size={24} className="text-neura-600" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-1">Modo Anónimo</h3>
-                <p className="text-sm text-gray-500">Conversa sem criar conta. Privacidade total.</p>
-              </div>
-              <HiArrowRight size={20} className="text-neura-400 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+            <div className="text-center">
+              <SectionBadge tone="violet" icon={ShieldCheck} className="justify-center">
+                Primeiro passo
+              </SectionBadge>
+              <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-normal text-slate-950 sm:text-5xl">
+                Como gostarias de começar?
+              </h1>
+              <p className="mt-4 text-base leading-7 text-slate-500">Escolhe o formato que deixa este momento mais confortável para ti.</p>
             </div>
-          </button>
 
-          <button
-            onClick={() => navigate('/entrar')}
-            className="w-full p-6 bg-gradient-to-r from-neura-600 to-neura-700 hover:from-neura-700 hover:to-neura-800 rounded-2xl text-left transition-all hover:shadow-lg hover:-translate-y-1 group shadow-lg"
-          >
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
-                <HiUser size={24} className="text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-white mb-1">Criar Conta</h3>
-                <p className="text-sm text-neura-100">Histórico, insights e acompanhamento personalizado.</p>
-              </div>
-              <HiArrowRight size={20} className="text-white/60 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {options.map(({ title, text, icon: Icon, to, featured }, index) => (
+                <motion.button
+                  key={title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.08 }}
+                  onClick={() => navigate(to)}
+                  className="group rounded-3xl border p-6 text-left shadow-neura transition-all hover:-translate-y-1 hover:shadow-xl"
+                  style={featured ? { background: BRAND.gradient, borderColor: 'transparent' } : undefined}
+                >
+                  <div className="flex items-start gap-4">
+                    <span className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl ${featured ? 'bg-white/15 text-white' : 'bg-blue-50 text-blue-600'}`}>
+                      <Icon size={24} />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <h2 className={`text-lg font-bold ${featured ? 'text-white' : 'text-slate-950'}`}>{title}</h2>
+                      <p className={`mt-2 text-sm leading-6 ${featured ? 'text-blue-100' : 'text-slate-500'}`}>{text}</p>
+                    </div>
+                    <ArrowRight className={`mt-1 flex-shrink-0 transition-transform group-hover:translate-x-1 ${featured ? 'text-white/80' : 'text-blue-600'}`} size={20} />
+                  </div>
+                </motion.button>
+              ))}
             </div>
-          </button>
-        </div>
 
-        <p className="text-center text-xs text-gray-400">
-          Podes mudar de modo a qualquer momento
-        </p>
+            <p className="mt-8 text-center text-sm font-medium text-slate-400">Podes mudar de modo a qualquer momento.</p>
+          </motion.div>
+        </main>
       </div>
     </div>
   );

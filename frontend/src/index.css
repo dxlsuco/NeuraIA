@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,11 +12,11 @@
   }
 
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #f9f6f3;
-    color: #1f2937;
+    background-color: #F8FAFF;
+    color: #0f172a;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -28,52 +28,51 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #f9f6f3;
+    background: #F8FAFF;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #d9cec1;
+    background: #CBD5E1;
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #c9a880;
+    background: #94A3B8;
   }
 
   ::selection {
-    background-color: #e8dcc8;
-    color: #3e2f23;
+    background-color: #DBEAFE;
+    color: #172554;
   }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center
-           bg-neura-600 text-white px-6 py-3 rounded-2xl font-medium
-           hover:bg-neura-700 active:scale-95 
-           transition-all duration-200 shadow-lg
-           hover:shadow-xl;
+           bg-gradient-to-r from-neura-600 to-violet-600 text-white px-6 py-3 rounded-full font-semibold
+           active:scale-95 transition-all duration-200 shadow-xl
+           hover:scale-105 hover:shadow-blue-500/30;
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center
-           bg-white text-neura-700 px-6 py-3 rounded-2xl font-medium
-           border-2 border-neura-200 hover:border-neura-300
+           bg-white text-slate-700 px-6 py-3 rounded-full font-semibold
+           border border-slate-200 hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50
            active:scale-95 transition-all duration-200;
   }
 
   .card {
-    @apply bg-white rounded-3xl shadow-lg p-6
-           border border-gray-100 hover:shadow-xl
+    @apply bg-white rounded-3xl p-6
+           border border-slate-100 shadow-neura hover:shadow-xl
            transition-all duration-300;
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-neura-600 to-neura-400 
+    @apply bg-gradient-to-r from-neura-600 to-violet-600 
            bg-clip-text text-transparent;
   }
 
   .glass {
-    @apply bg-white/80 backdrop-blur-xl border border-white/20;
+    @apply bg-white/80 backdrop-blur-xl border border-white/60;
   }
 }

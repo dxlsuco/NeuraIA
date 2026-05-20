@@ -1,11 +1,28 @@
-import { HiArrowRight, HiChatBubbleLeftRight, HiCheckCircle, HiClipboardDocumentCheck, HiSparkles, HiUserGroup } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowRight, Bot, CheckCircle2, ClipboardCheck, Sparkles, Users } from 'lucide-react';
 import MarketingShell from '../components/MarketingShell';
+import { PrimaryButton, SectionBadge } from '../components/Brand';
 
 const steps = [
-  { icon: HiClipboardDocumentCheck, number: '01', title: 'Faz um check-in', text: 'Escolhe como te sentes e o tema que gostarias de explorar.' },
-  { icon: HiChatBubbleLeftRight, number: '02', title: 'Conversa com a Neura', text: 'Recebe apoio imediato num chat simples, acolhedor e sem julgamentos.' },
-  { icon: HiUserGroup, number: '03', title: 'Avança com apoio humano', text: 'Quando fizer sentido, agenda acompanhamento com um profissional.' },
+  {
+    icon: ClipboardCheck,
+    number: '01',
+    title: 'Faz um check-in',
+    text: 'Escolhe como te sentes e o tema que gostarias de explorar.',
+  },
+  {
+    icon: Bot,
+    number: '02',
+    title: 'Conversa com a Neura',
+    text: 'Recebe apoio imediato num chat simples, acolhedor e sem julgamentos.',
+  },
+  {
+    icon: Users,
+    number: '03',
+    title: 'Avança com apoio humano',
+    text: 'Quando fizer sentido, agenda acompanhamento com um profissional.',
+  },
 ];
 
 export default function HowItWorksPage() {
@@ -13,49 +30,68 @@ export default function HowItWorksPage() {
 
   return (
     <MarketingShell>
-      <section className="max-w-6xl mx-auto px-6 pt-20 pb-24">
-        <div className="text-center max-w-3xl mx-auto space-y-5">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-neura-200 rounded-full text-neura-700 text-xs font-medium">
-            <HiSparkles size={12} />
-            Como funciona
-          </div>
-          <h1 className="font-display text-5xl lg:text-[3.5rem] leading-[1.08] text-gray-900 tracking-tight">
-            Começar deve ser simples, mesmo num dia difícil.
-          </h1>
-          <p className="text-lg text-gray-500 leading-relaxed">
-            A experiência foi desenhada para te levar do primeiro check-in ao apoio certo com o mínimo de fricção.
-          </p>
-        </div>
+      <section className="bg-[linear-gradient(135deg,#EEF2FF_0%,#F8FAFF_52%,#F0FDFA_100%)] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <SectionBadge icon={Sparkles} tone="blue" className="justify-center">
+              Como funciona
+            </SectionBadge>
+            <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-normal text-slate-950 lg:text-6xl">
+              Começar deve ser simples, mesmo num dia difícil.
+            </h1>
+            <p className="mt-5 text-lg leading-8 text-slate-500">
+              A experiência foi desenhada para te levar do primeiro check-in ao apoio certo com o mínimo de fricção.
+            </p>
+          </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-5 mt-16">
-          {steps.map(({ icon: Icon, number, title, text }) => (
-            <article key={number} className="bg-white border border-neura-100 rounded-3xl p-7 shadow-sm">
-              <div className="flex items-center justify-between mb-8">
-                <div className="w-12 h-12 rounded-2xl bg-neura-100 text-neura-600 flex items-center justify-center">
-                  <Icon size={22} />
+          <div className="mt-16 grid gap-5 md:grid-cols-3">
+            {steps.map(({ icon: Icon, number, title, text }, index) => (
+              <motion.article
+                key={number}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.08 }}
+                className="rounded-3xl border border-slate-100 bg-white p-7 shadow-neura transition-all hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="mb-8 flex items-center justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                    <Icon size={23} />
+                  </div>
+                  <span className="text-5xl font-extrabold leading-none text-blue-100">{number}</span>
                 </div>
-                <span className="font-display text-5xl text-neura-200 font-semibold leading-none">{number}</span>
-              </div>
-              <h2 className="font-semibold text-gray-900 mb-2">{title}</h2>
-              <p className="text-sm text-gray-500 leading-relaxed">{text}</p>
-            </article>
-          ))}
+                <h2 className="text-lg font-bold text-slate-950">{title}</h2>
+                <p className="mt-3 text-sm leading-6 text-slate-500">{text}</p>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="bg-white border-y border-gray-100 py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-7">
+      <section className="border-y border-slate-100 bg-white py-20">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-2">
-            {['Privado', 'Imediato', 'Humano quando necessário'].map(item => (
-              <span key={item} className="inline-flex items-center gap-2 px-3.5 py-2 bg-neura-50 border border-neura-100 rounded-xl text-xs text-gray-600">
-                <HiCheckCircle className="text-neura-500" size={14} />
+            {['Privado', 'Imediato', 'Humano quando necessário'].map((item) => (
+              <span key={item} className="inline-flex items-center gap-2 rounded-full border border-slate-100 bg-[#F8FAFF] px-4 py-2 text-sm font-semibold text-slate-600">
+                <CheckCircle2 className="text-teal-600" size={15} />
                 {item}
               </span>
             ))}
           </div>
-          <h2 className="font-display text-4xl text-gray-900 tracking-tight">Experimenta o primeiro passo.</h2>
-          <button onClick={() => navigate('/check-in')} className="inline-flex items-center gap-2 px-7 py-4 bg-neura-600 hover:bg-neura-700 text-white rounded-2xl font-semibold text-sm transition-colors shadow-lg shadow-neura-200/70">
-            Fazer check-in <HiArrowRight size={16} />
+          <h2 className="mt-7 text-3xl font-extrabold tracking-normal text-slate-950 sm:text-4xl">Experimenta o primeiro passo.</h2>
+          <PrimaryButton onClick={() => navigate('/check-in')} className="mt-8 px-7 py-4">
+            Fazer check-in
+          </PrimaryButton>
+          <button
+            onClick={() => navigate('/recursos')}
+            className="ml-0 mt-3 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-slate-500 transition-colors hover:text-violet-600 sm:ml-3"
+          >
+            Ver recursos
+            <ArrowRight size={15} />
           </button>
         </div>
       </section>

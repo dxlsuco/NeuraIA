@@ -1,426 +1,440 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
-  HiSparkles,
-  HiArrowRight,
-  HiChatBubbleLeftRight,
-  HiClock,
-  HiLockClosed,
-  HiShieldCheck,
-  HiXMark,
-  HiPaperAirplane,
-  HiCpuChip,
-  HiVideoCamera,
-  HiHeart,
-  HiCheckCircle,
-  HiStar,
-  HiUserGroup,
-} from 'react-icons/hi2';
-import { FaUserDoctor } from 'react-icons/fa6';
+  ArrowRight,
+  Bot,
+  CalendarCheck,
+  CheckCircle2,
+  Clock3,
+  HeartHandshake,
+  MessageCircle,
+  Quote,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Users,
+  X,
+} from 'lucide-react';
+import MarketingShell from '../components/MarketingShell';
+import { PrimaryButton, SecondaryButton, SectionBadge } from '../components/Brand';
+import { BRAND } from '../components/brandTokens';
+import { cn } from '../utils/cn';
 
-const REPLIES = [
-  'Obrigado por partilhares. Queres falar mais sobre isso?',
-  'Entendo. Estou aqui contigo.',
-  'Os teus sentimentos são válidos. Conta-me mais.',
-  'Como posso ajudar-te hoje?',
-  'Às vezes é importante ter um espaço seguro para falar.',
+const replies = [
+  'Obrigado por partilhares. Vamos respirar um pouco e perceber o que mais pesa agora.',
+  'Estou aqui contigo. O que aconteceu antes de te sentires assim?',
+  'O que sentes faz sentido. Queres organizar isso em passos pequenos?',
+  'Podemos explorar isso com calma. Onde sentes essa tensão no corpo?',
 ];
 
 const features = [
   {
-    icon: HiChatBubbleLeftRight,
-    title: 'IA Empática 24/7',
-    desc: 'Conversa imediata quando precisares de apoio emocional, a qualquer hora do dia ou da noite.',
-    iconClass: 'bg-neura-50 text-neura-600',
-    borderClass: 'border-neura-100',
+    icon: MessageCircle,
+    title: 'IA empática 24/7',
+    desc: 'Conversa imediata para nomear emoções, reduzir ruído mental e encontrar o próximo passo.',
+    tone: 'bg-blue-50 text-blue-600',
   },
   {
-    icon: FaUserDoctor,
-    title: 'Psicólogos Certificados',
-    desc: 'Profissionais reais disponíveis para sessões de acompanhamento personalizadas.',
-    iconClass: 'bg-neura-100 text-neura-600',
-    borderClass: 'border-neura-100',
+    icon: Users,
+    title: 'Psicólogos certificados',
+    desc: 'Encaminhamento para profissionais reais quando o cuidado humano é o melhor caminho.',
+    tone: 'bg-violet-50 text-violet-600',
   },
   {
-    icon: HiShieldCheck,
-    title: 'Privacidade Total',
-    desc: 'As tuas conversas são encriptadas de ponta a ponta. Nada é partilhado.',
-    iconClass: 'bg-neura-50 text-neura-600',
-    borderClass: 'border-neura-100',
+    icon: ShieldCheck,
+    title: 'Privacidade por desenho',
+    desc: 'Fluxos discretos, dados sensíveis protegidos e uma experiência sem exposição desnecessária.',
+    tone: 'bg-teal-50 text-teal-600',
   },
   {
-    icon: HiHeart,
-    title: 'Sem Julgamentos',
-    desc: 'Um espaço livre e seguro para seres tu mesmo, sem pressões nem expectativas.',
-    iconClass: 'bg-neura-100 text-neura-600',
-    borderClass: 'border-neura-100',
+    icon: HeartHandshake,
+    title: 'Apoio sem julgamento',
+    desc: 'Um ambiente acolhedor para falar de ansiedade, stress, relações, rotina e autocuidado.',
+    tone: 'bg-sage-50 text-sage-600',
   },
+];
+
+const stats = [
+  { value: '24/7', label: 'apoio imediato' },
+  { value: '+12k', label: 'check-ins guiados' },
+  { value: '98%', label: 'sentem mais clareza' },
+];
+
+const steps = [
+  { icon: CalendarCheck, title: 'Faz um check-in', text: 'Escolhe como estás e o tema que precisa de atenção.' },
+  { icon: Bot, title: 'Conversa com a Neura', text: 'Recebe perguntas calmas e sugestões práticas para organizar o momento.' },
+  { icon: Users, title: 'Avança com apoio humano', text: 'Quando necessário, agenda uma sessão com um psicólogo certificado.' },
 ];
 
 const testimonials = [
   {
     name: 'Ana Martins',
-    role: 'Professora, 34 anos',
-    text: 'A Neura mudou a forma como lido com o stress do dia a dia. Ter apoio disponível a qualquer hora faz toda a diferença.',
-    stars: 5,
+    role: 'Professora',
+    text: 'A Neura ajudou-me a perceber padrões de stress antes de chegar ao limite.',
   },
   {
     name: 'Ricardo Silva',
-    role: 'Estudante, 22 anos',
-    text: 'Nunca pensei que falar com uma IA fosse tão natural. Sinto-me realmente ouvido.',
-    stars: 5,
+    role: 'Estudante',
+    text: 'O chat é simples e acolhedor. Senti que podia começar sem explicar tudo de uma vez.',
   },
   {
     name: 'Mariana Costa',
-    role: 'Engenheira, 29 anos',
-    text: 'A transição para o psicólogo real foi muito fácil. A equipa é incrível.',
-    stars: 5,
+    role: 'Engenheira',
+    text: 'A ponte para falar com uma psicóloga tornou a decisão menos pesada.',
   },
 ];
+
+const heroMessages = [
+  { from: 'ai', text: 'Olá, sou a Neura. Como está o teu nível de ansiedade agora?' },
+  { from: 'user', text: 'Está alto, sinto pressão no peito.' },
+  { from: 'ai', text: 'Vamos começar por uma pausa curta. Inspira por 4 segundos e expira por 6.' },
+];
+
+function ChatBubble({ message }) {
+  const isUser = message.from === 'user';
+
+  return (
+    <div className={cn('flex', isUser ? 'justify-end' : 'justify-start')}>
+      <div
+        className={cn(
+          'max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm',
+          isUser
+            ? 'rounded-tr-sm bg-gradient-to-br from-blue-600 to-violet-600 text-white'
+            : 'rounded-tl-sm border border-slate-100 bg-white text-slate-600',
+        )}
+      >
+        {message.text}
+      </div>
+    </div>
+  );
+}
+
+function HeroMockup() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.12 }}
+      className="relative"
+    >
+      <div className="absolute -left-5 top-10 hidden rounded-3xl border border-slate-100 bg-white p-4 shadow-neura lg:block">
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-50 text-teal-600">
+            <Clock3 size={19} />
+          </span>
+          <div>
+            <p className="text-xs font-semibold text-slate-900">Check-in diário</p>
+            <p className="text-xs text-slate-400">2 min concluídos</p>
+          </div>
+        </div>
+      </div>
+
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ repeat: Infinity, duration: 3.4, ease: 'easeInOut' }}
+        className="absolute -right-4 bottom-10 hidden rounded-3xl border border-violet-100 bg-white p-4 shadow-neura-premium lg:block"
+      >
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
+            <ShieldCheck size={19} />
+          </span>
+          <div>
+            <p className="text-xs font-semibold text-slate-900">Modo privado</p>
+            <p className="text-xs text-slate-400">Sessão protegida</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-neura-premium">
+        <div className="h-52 overflow-hidden sm:h-64">
+          <img
+            src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=1200&q=85"
+            alt="Profissional de saúde mental em sessão online"
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <div className="p-5 sm:p-6">
+          <div className="mb-5 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-bold text-slate-950">Conversa em andamento</p>
+              <p className="text-xs text-slate-400">Neura IA responde com contexto</p>
+            </div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-600">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              Ativo
+            </span>
+          </div>
+          <div className="space-y-3">
+            {heroMessages.map((message, index) => (
+              <ChatBubble key={index} message={message} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const [chatOpen, setChatOpen] = useState(false);
   const [input, setInput] = useState('');
   const [replyIdx, setReplyIdx] = useState(0);
-  const [messages, setMessages] = useState([
-    { from: 'ai', text: 'Olá. Estou aqui para te ouvir. Como te sentes hoje?' },
-  ]);
+  const [messages, setMessages] = useState([{ from: 'ai', text: 'Olá. Estou aqui para te ouvir. Como te sentes hoje?' }]);
   const msgsRef = useRef(null);
 
   const send = () => {
-    const val = input.trim();
-    if (!val) return;
-    const aiText = REPLIES[replyIdx % REPLIES.length];
-    setMessages(prev => [
+    const value = input.trim();
+    if (!value) return;
+
+    setMessages((prev) => [
       ...prev,
-      { from: 'user', text: val },
-      { from: 'ai', text: aiText },
+      { from: 'user', text: value },
+      { from: 'ai', text: replies[replyIdx % replies.length] },
     ]);
-    setReplyIdx(i => i + 1);
+    setReplyIdx((idx) => idx + 1);
     setInput('');
   };
 
   useEffect(() => {
     if (msgsRef.current) msgsRef.current.scrollTop = msgsRef.current.scrollHeight;
-  }, [messages]);
+  }, [messages, chatOpen]);
 
   return (
-    <div className="min-h-screen bg-neura-50">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
-        * { font-family: 'DM Sans', sans-serif; }
-        .font-display { font-family: 'Lora', Georgia, serif; }
-        .chat-msgs::-webkit-scrollbar { width: 3px; }
-        .chat-msgs::-webkit-scrollbar-thumb { background: #d9cec1; border-radius: 4px; }
-      `}</style>
-
-      {/* ── NAV ── */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neura-100/60">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-gradient-to-br from-neura-500 to-neura-700 rounded-xl flex items-center justify-center shadow-sm">
-              <HiSparkles className="text-white" size={14} />
-            </div>
-            <span className="font-display font-semibold text-xl text-neura-900 tracking-tight">Neura</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8">
-            {[
-              { label: 'Início', to: '/' },
-              { label: 'Recursos', to: '/recursos' },
-              { label: 'Psicólogos', to: '/psicologos' },
-              { label: 'Como funciona', to: '/como-funciona' },
-              { label: 'Preços', to: '/precos' },
-            ].map(item => (
-              <button key={item.to} onClick={() => navigate(item.to)} className="text-sm text-gray-500 hover:text-neura-700 transition-colors">
-                {item.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/onboarding')} className="text-sm text-gray-600 hover:text-neura-700 transition-colors px-4 py-2 rounded-xl hover:bg-neura-50">
-              Começar grátis
-            </button>
-            <button onClick={() => navigate('/entrar')} className="text-sm font-medium bg-neura-600 hover:bg-neura-700 text-white px-5 py-2.5 rounded-xl transition-colors shadow-sm">
-              Entrar
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* ── HERO ── */}
-      <section className="max-w-6xl mx-auto px-6 pt-20 pb-28">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-
-          {/* Left */}
-          <div className="space-y-7">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-neura-50 border border-neura-200 rounded-full text-neura-700 text-xs font-medium">
-              <HiSparkles size={11} />
-              Apoio emocional inteligente e humano
-            </div>
-
-            <h1 className="font-display text-5xl lg:text-[3.5rem] leading-[1.1] text-gray-900 tracking-tight">
-              Não estás<br />
-              <span className="text-neura-600 italic">sozinho.</span>
+    <MarketingShell>
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#EEF2FF_0%,#F8FAFF_52%,#F5F3FF_100%)]">
+        <div className="mx-auto grid min-h-[calc(100svh-112px)] max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_0.92fr] lg:px-8 lg:py-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-3xl"
+          >
+            <SectionBadge tone="violet">Apoio emocional inteligente e humano</SectionBadge>
+            <h1 className="mt-6 text-5xl font-extrabold leading-[1.03] tracking-normal text-slate-950 sm:text-6xl lg:text-7xl">
+              Neura cuida da tua saúde mental com IA e apoio clínico.
             </h1>
-
-            <p className="text-lg text-gray-400 leading-relaxed max-w-md">
-              Um espaço seguro para falares, desabafares e encontrares apoio
-              — com IA empática ou psicólogos certificados, sempre disponíveis.
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-500">
+              Um espaço seguro para desabafar, entender padrões emocionais e encontrar psicólogos certificados quando precisares de acompanhamento.
             </p>
-
-            <div className="flex flex-wrap gap-3">
-              <button onClick={() => navigate('/entrar')} className="flex items-center gap-2 px-6 py-3.5 bg-neura-600 hover:bg-neura-700 text-white rounded-2xl font-medium text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-neura-200/60">
-                Começar agora <HiArrowRight size={14} />
-              </button>
-              <button onClick={() => navigate('/onboarding')} className="flex items-center gap-2 px-6 py-3.5 bg-white border border-gray-200 hover:border-neura-300 text-gray-700 rounded-2xl font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
-                <HiChatBubbleLeftRight size={14} className="text-neura-500" />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <PrimaryButton onClick={() => navigate('/onboarding')} className="px-7 py-4">
+                Começar agora
+              </PrimaryButton>
+              <SecondaryButton onClick={() => navigate('/check-in')} className="px-7 py-4">
+                <MessageCircle size={17} />
                 Experimentar a IA
-              </button>
+              </SecondaryButton>
             </div>
-
-            <div className="flex flex-wrap gap-2">
-              {[
-                { icon: HiClock, label: 'Resposta em segundos' },
-                { icon: HiLockClosed, label: '100% confidencial' },
-                { icon: HiCheckCircle, label: 'Sem julgamentos' },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 px-3.5 py-2 bg-white border border-gray-100 rounded-lg text-xs text-gray-400 shadow-sm">
-                  <Icon size={12} className="text-neura-400" />
-                  {label}
+            <div className="mt-8 grid max-w-xl grid-cols-3 gap-3">
+              {stats.map((stat) => (
+                <div key={stat.label} className="rounded-2xl border border-slate-100 bg-white/80 p-4 shadow-neura backdrop-blur-xl">
+                  <p className="text-2xl font-extrabold text-slate-950">{stat.value}</p>
+                  <p className="mt-1 text-xs font-medium text-slate-400">{stat.label}</p>
                 </div>
               ))}
             </div>
+          </motion.div>
 
-            <div className="flex items-center gap-3 pt-1">
-              <div className="flex -space-x-2">
-                {['bg-neura-400', 'bg-neura-300', 'bg-neura-200', 'bg-neura-100'].map((c, i) => (
-                  <div key={i} className={`w-8 h-8 rounded-full ${c} border-2 border-white`} />
-                ))}
-              </div>
-              <p className="text-sm text-gray-400">
-                <span className="font-semibold text-gray-600">+12.000</span> pessoas já encontraram apoio
-              </p>
-            </div>
-          </div>
-
-          {/* Right */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-neura-100 to-neura-50 rounded-4xl -rotate-2 scale-105 opacity-70" />
-            <div className="relative rounded-4xl overflow-hidden shadow-2xl shadow-neura-100/80">
-              <img
-                src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=900&q=85"
-                alt="Equipa de psicólogos"
-                className="w-full h-[480px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-neura-800/50 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/50">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-neura-100 rounded-xl flex items-center justify-center">
-                      <HiUserGroup size={18} className="text-neura-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-gray-800">Equipa clínica certificada</p>
-                      <p className="text-xs text-gray-400">Disponível 7 dias por semana</p>
-                    </div>
-                    <div className="ml-auto flex items-center gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-neura-500 animate-pulse" />
-                      <span className="text-xs text-neura-600 font-medium">Online</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <HeroMockup />
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
-      <section className="bg-white border-y border-gray-100/80 py-24">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-xs font-semibold text-neura-600 uppercase tracking-widest mb-3">O que oferecemos</p>
-            <h2 className="font-display text-4xl text-gray-900 tracking-tight">Tudo o que precisas,<br />num só lugar</h2>
+      <section className="border-y border-slate-100 bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <SectionBadge tone="blue" className="justify-center">
+              Recursos principais
+            </SectionBadge>
+            <h2 className="mt-5 text-3xl font-extrabold tracking-normal text-slate-950 sm:text-4xl">Tudo para começar com calma e continuidade.</h2>
+            <p className="mt-4 text-base leading-7 text-slate-500">A experiência combina conversa, check-ins e suporte humano sem tornar o cuidado pesado.</p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {features.map(({ icon: Icon, title, desc, iconClass, borderClass }) => (
-              <div key={title} className={`p-6 rounded-3xl border bg-white ${borderClass} hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-default`}>
-                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center mb-5 ${iconClass}`}>
-                  <Icon size={19} />
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {features.map(({ icon: Icon, title, desc, tone }, index) => (
+              <motion.article
+                key={title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                className="rounded-3xl border border-slate-100 bg-white p-6 shadow-neura transition-all hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className={cn('mb-5 flex h-11 w-11 items-center justify-center rounded-2xl', tone)}>
+                  <Icon size={21} />
                 </div>
-                <h3 className="font-semibold text-gray-800 mb-2 text-sm">{title}</h3>
-                <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
-              </div>
+                <h3 className="text-base font-bold text-slate-950">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-500">{desc}</p>
+              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <section className="py-24 bg-neura-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-xs font-semibold text-neura-600 uppercase tracking-widest mb-3">Como funciona</p>
-            <h2 className="font-display text-4xl text-gray-900 tracking-tight">Simples como deve ser</h2>
+      <section className="bg-[#F8FAFF] py-20">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+          <div>
+            <SectionBadge tone="teal">Como funciona</SectionBadge>
+            <h2 className="mt-5 text-3xl font-extrabold tracking-normal text-slate-950 sm:text-4xl">Do primeiro check-in ao apoio certo.</h2>
+            <p className="mt-4 text-base leading-7 text-slate-500">
+              A Neura foi desenhada para criar clareza em poucos minutos e abrir caminho para acompanhamento profissional quando fizer sentido.
+            </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-12">
-            {[
-              { step: '01', title: 'Cria a tua conta', desc: 'Registo gratuito em menos de um minuto, sem cartão de crédito.', color: 'text-neura-400' },
-              { step: '02', title: 'Fala como te sentes', desc: 'Começa com a nossa IA empática ou agenda diretamente com um psicólogo.', color: 'text-neura-300' },
-              { step: '03', title: 'Encontra o apoio certo', desc: 'Acompanhamento contínuo, ao teu ritmo, no teu horário.', color: 'text-neura-400' },
-            ].map(({ step, title, desc, color }) => (
-              <div key={step}>
-                <div className={`font-display text-7xl font-semibold ${color} opacity-30 mb-3 leading-none select-none`}>{step}</div>
-                <h3 className="font-semibold text-gray-800 mb-2 text-base">{title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{desc}</p>
-              </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {steps.map(({ icon: Icon, title, text }, index) => (
+              <motion.article
+                key={title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                className="rounded-3xl border border-slate-100 bg-white p-6 shadow-neura"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                    <Icon size={21} />
+                  </span>
+                  <span className="text-sm font-extrabold text-slate-200">0{index + 1}</span>
+                </div>
+                <h3 className="mt-7 text-base font-bold text-slate-950">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-500">{text}</p>
+              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section className="py-24 bg-white border-t border-gray-100">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-xs font-semibold text-neura-600 uppercase tracking-widest mb-3">Testemunhos</p>
-            <h2 className="font-display text-4xl text-gray-900 tracking-tight">O que dizem sobre nós</h2>
+      <section className="border-y border-slate-100 bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <SectionBadge tone="sage">Confiança</SectionBadge>
+              <h2 className="mt-5 text-3xl font-extrabold tracking-normal text-slate-950 sm:text-4xl">Uma experiência acolhedora sem perder rigor.</h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {['Privado', 'Seguro', 'Sem julgamento'].map((item) => (
+                <span key={item} className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
+                  <CheckCircle2 size={15} />
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map(({ name, role, text, stars }) => (
-              <div key={name} className="p-7 rounded-3xl border border-gray-100 bg-neura-50 hover:shadow-md transition-shadow">
-                <div className="flex gap-0.5 mb-4">
-                  {Array.from({ length: stars }).map((_, i) => (
-                    <HiStar key={i} size={13} className="text-amber-500" />
-                  ))}
-                </div>
-                <p className="text-sm text-gray-500 leading-relaxed mb-6 italic">"{text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-neura-100 flex items-center justify-center text-neura-700 font-semibold text-xs">
-                    {name[0]}
+          <div className="grid gap-5 md:grid-cols-3">
+            {testimonials.map((item, index) => (
+              <motion.article
+                key={item.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                className="rounded-3xl border border-slate-100 bg-[#F8FAFF] p-6 shadow-neura"
+              >
+                <div className="mb-5 flex items-center justify-between">
+                  <Quote className="text-blue-600" size={24} />
+                  <div className="flex gap-1 text-amber-400">
+                    {Array.from({ length: 5 }).map((_, star) => (
+                      <Star key={star} size={15} fill="currentColor" />
+                    ))}
                   </div>
+                </div>
+                <p className="text-sm leading-7 text-slate-600">"{item.text}"</p>
+                <div className="mt-6 flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-violet-600 text-sm font-bold text-white">
+                    {item.name[0]}
+                  </span>
                   <div>
-                    <p className="text-sm font-semibold text-gray-800">{name}</p>
-                    <p className="text-xs text-gray-400">{role}</p>
+                    <p className="text-sm font-bold text-slate-950">{item.name}</p>
+                    <p className="text-xs text-slate-400">{item.role}</p>
                   </div>
                 </div>
-              </div>
+              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-20 bg-gradient-to-br from-neura-600 to-neura-800">
-        <div className="max-w-2xl mx-auto px-6 text-center space-y-6">
-          <h2 className="font-display text-4xl text-white tracking-tight leading-tight">
-            Começa hoje. O primeiro passo<br />
-            <span className="italic text-neura-200">é sempre o mais difícil.</span>
+      <section className="bg-[#F8FAFF] px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl px-6 py-12 text-center shadow-neura-premium sm:px-12" style={{ background: BRAND.gradient }}>
+          <Sparkles className="mx-auto mb-5 text-white" size={28} />
+          <h2 className="mx-auto max-w-3xl text-3xl font-extrabold tracking-normal text-white sm:text-4xl">
+            O primeiro passo pode ser pequeno. A Neura ajuda-te a dar esse passo hoje.
           </h2>
-          <p className="text-neura-300 text-sm">Grátis para começar. Sem compromissos.</p>
-          <button onClick={() => navigate('/onboarding')} className="inline-flex items-center gap-2 px-8 py-4 bg-white text-neura-700 font-semibold rounded-2xl hover:bg-neura-50 transition-colors shadow-xl text-sm">
-            Começar agora <HiArrowRight size={15} />
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-blue-100">Começa com um check-in gratuito, sem cartão e sem compromisso.</p>
+          <button
+            onClick={() => navigate('/onboarding')}
+            className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-blue-700 shadow-xl transition-all hover:scale-105 hover:bg-blue-50"
+          >
+            Começar grátis
+            <ArrowRight size={16} />
           </button>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="bg-neura-900 py-10 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-neura-600 rounded-lg flex items-center justify-center">
-              <HiSparkles className="text-white" size={12} />
-            </div>
-            <span className="font-display text-white font-semibold">Neura</span>
-          </div>
-          <p className="text-xs text-neura-500">© 2025 Neura. Todos os direitos reservados.</p>
-          <div className="flex gap-5 text-xs text-neura-500">
-            {['Privacidade', 'Termos', 'Contacto'].map(l => (
-              <a key={l} href="#" className="hover:text-neura-300 transition-colors">{l}</a>
-            ))}
-          </div>
-        </div>
-      </footer>
-
-      {/* ── FAB ── */}
       <button
-        onClick={() => setChatOpen(o => !o)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-neura-600 hover:bg-neura-700 text-white rounded-2xl shadow-xl shadow-neura-300/40 flex items-center justify-center transition-all hover:scale-105"
+        type="button"
+        onClick={() => setChatOpen((open) => !open)}
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-xl shadow-blue-500/30 transition-all hover:scale-105"
+        style={{ background: BRAND.gradient }}
+        aria-label={chatOpen ? 'Fechar chat' : 'Abrir chat'}
       >
-        {chatOpen ? <HiXMark size={22} /> : <HiChatBubbleLeftRight size={22} />}
+        {chatOpen ? <X size={22} /> : <MessageCircle size={22} />}
       </button>
 
-      {/* ── CHAT PANEL ── */}
-      <div
-        className={`
-          fixed bottom-24 right-6 z-50 w-[340px] bg-white rounded-3xl shadow-2xl
-          border border-gray-100 flex flex-col overflow-hidden
-          transition-all duration-200 origin-bottom-right
-          ${chatOpen ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'}
-        `}
-        style={{ maxHeight: 480 }}
-      >
-        {/* Chat header */}
-        <div className="bg-gradient-to-r from-neura-600 to-neura-500 px-5 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
-              <HiCpuChip size={16} className="text-white" />
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-white">Neura IA</p>
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-neura-200 animate-pulse" />
-                <p className="text-xs text-neura-100">Sempre disponível</p>
-              </div>
-            </div>
-          </div>
-          <button onClick={() => setChatOpen(false)} className="text-white/60 hover:text-white transition-colors">
-            <HiXMark size={18} />
-          </button>
-        </div>
-
-        {/* Messages */}
-        <div
-          ref={msgsRef}
-          className="chat-msgs flex-1 overflow-y-auto p-4 bg-neura-50 flex flex-col gap-3"
-          style={{ minHeight: 200, maxHeight: 280 }}
-        >
-          {messages.map((m, i) => (
-            <div key={i} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] px-4 py-2.5 text-sm leading-relaxed rounded-2xl ${
-                m.from === 'user'
-                  ? 'bg-neura-600 text-white rounded-br-sm'
-                  : 'bg-white border border-gray-100 text-gray-600 rounded-bl-sm shadow-sm'
-              }`}>
-                {m.text}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Input */}
-        <div className="p-3 border-t border-gray-100 bg-white flex gap-2">
-          <input
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && send()}
-            placeholder="Escreve como te sentes..."
-            className="flex-1 px-4 py-2.5 bg-neura-50 border border-gray-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-300 outline-none focus:border-neura-300 transition-colors"
-          />
-          <button
-            onClick={send}
-            className="w-10 h-10 bg-neura-600 hover:bg-neura-700 text-white rounded-xl flex items-center justify-center transition-colors flex-shrink-0"
+      <AnimatePresence>
+        {chatOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.96 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-24 right-4 z-50 flex max-h-[520px] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-2xl sm:right-6"
           >
-            <HiPaperAirplane size={14} />
-          </button>
-        </div>
-      </div>
-    </div>
+            <div className="flex items-center justify-between px-5 py-4" style={{ background: BRAND.gradient }}>
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/15 text-white">
+                  <Bot size={19} />
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-white">Neura IA</p>
+                  <p className="flex items-center gap-1.5 text-xs text-blue-100">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                    Sempre disponível
+                  </p>
+                </div>
+              </div>
+              <button onClick={() => setChatOpen(false)} className="rounded-full p-1 text-white/70 transition-colors hover:bg-white/10 hover:text-white">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div ref={msgsRef} className="flex min-h-64 flex-1 flex-col gap-3 overflow-y-auto bg-[#F8FAFF] p-4">
+              {messages.map((message, index) => (
+                <ChatBubble key={index} message={message} />
+              ))}
+            </div>
+
+            <div className="flex gap-2 border-t border-slate-100 bg-white p-3">
+              <input
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={(event) => event.key === 'Enter' && send()}
+                placeholder="Escreve como te sentes..."
+                className="min-w-0 flex-1 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition-all placeholder:text-slate-400 focus:border-blue-300 focus:bg-white focus:shadow-sm"
+              />
+              <button
+                onClick={send}
+                className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl text-white transition-transform hover:scale-105"
+                style={{ background: BRAND.tealGradient }}
+                aria-label="Enviar mensagem"
+              >
+                <Send size={17} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </MarketingShell>
   );
 }
