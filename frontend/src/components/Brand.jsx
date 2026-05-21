@@ -12,14 +12,14 @@ export function BrandLogo({ className, markClassName, textClassName, onClick, li
     >
       <span
         className={cn(
-          'flex h-9 w-9 items-center justify-center rounded-2xl text-white shadow-lg shadow-blue-500/20',
+          'flex h-9 w-9 items-center justify-center rounded-2xl text-white shadow-lg shadow-teal-400/25 ring-1 ring-white/40',
           markClassName,
         )}
         style={{ background: BRAND.gradient }}
       >
         <Sparkles size={17} strokeWidth={2.4} />
       </span>
-      <span className={cn('text-xl font-extrabold tracking-tight', light ? 'text-white' : 'text-slate-950', textClassName)}>
+      <span className={cn('font-display text-xl font-extrabold tracking-normal', light ? 'text-white' : 'text-neura-text', textClassName)}>
         Neura
       </span>
     </Comp>
@@ -27,10 +27,10 @@ export function BrandLogo({ className, markClassName, textClassName, onClick, li
 }
 
 const badgeTones = {
-  blue: 'bg-blue-50 text-blue-700 border-blue-100',
-  violet: 'bg-violet-50 text-violet-700 border-violet-100',
-  teal: 'bg-teal-50 text-teal-700 border-teal-100',
-  sage: 'bg-sage-50 text-sage-700 border-sage-100',
+  blue: 'bg-neura-primary/15 text-teal-700 border-neura-primary/25',
+  violet: 'bg-neura-secondary/10 text-blue-600 border-neura-secondary/25',
+  teal: 'bg-neura-accent/15 text-violet-500 border-neura-accent/30',
+  sage: 'bg-neura-accent2/20 text-orange-600 border-neura-accent2/40',
 };
 
 export function SectionBadge({ children, icon: Icon = Sparkles, tone = 'blue', className }) {
@@ -52,7 +52,7 @@ export function PrimaryButton({ children, className, showArrow = true, ...props 
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-xl transition-all duration-200 hover:scale-105 hover:shadow-blue-500/30 active:scale-95 disabled:pointer-events-none disabled:opacity-60',
+        'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-teal-400/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-teal-400/30 active:scale-95 disabled:pointer-events-none disabled:opacity-60',
         className,
       )}
       style={{ background: BRAND.gradient }}
@@ -68,7 +68,7 @@ export function SecondaryButton({ children, className, ...props }) {
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all duration-200 hover:border-violet-300 hover:bg-violet-50 hover:text-violet-600 active:scale-95',
+        'inline-flex items-center justify-center gap-2 rounded-full border border-neura-line bg-white/85 px-6 py-3 text-sm font-semibold text-neura-text shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-neura-secondary hover:bg-sky-50 hover:text-teal-700 active:scale-95',
         className,
       )}
       {...props}

@@ -7,10 +7,17 @@ import { cn } from '../utils/cn';
 
 const navItems = [
   { label: 'Início', to: '/' },
+  { label: 'Dashboard', to: '/dashboard' },
   { label: 'Recursos', to: '/recursos' },
   { label: 'Psicólogos', to: '/psicologos' },
   { label: 'Como funciona', to: '/como-funciona' },
   { label: 'Preços', to: '/precos' },
+];
+
+const footerLinks = [
+  { label: 'Privacidade', to: '/privacidade' },
+  { label: 'Termos', to: '/termos' },
+  { label: 'Contacto', to: '/contacto' },
 ];
 
 export default function MarketingShell({ children }) {
@@ -23,8 +30,8 @@ export default function MarketingShell({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFF] text-slate-950">
-      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/90 shadow-[0_4px_20px_rgba(37,99,235,0.04)] backdrop-blur-xl">
+    <div className="min-h-screen bg-neura-bg font-sans text-neura-text">
+      <nav className="sticky top-0 z-50 border-b border-neura-line bg-white/80 shadow-[0_10px_34px_rgba(45,212,191,0.10)] backdrop-blur-xl">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <BrandLogo onClick={() => closeAndGo('/')} />
 
@@ -36,7 +43,7 @@ export default function MarketingShell({ children }) {
                 className={({ isActive }) =>
                   cn(
                     'rounded-full px-4 py-2 text-sm font-medium transition-all',
-                    isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
+                    isActive ? 'bg-neura-primary/15 text-teal-700' : 'text-neura-muted hover:bg-neura-bg hover:text-neura-text',
                   )
                 }
               >
@@ -57,7 +64,7 @@ export default function MarketingShell({ children }) {
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-100 bg-white text-slate-700 shadow-sm transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-600 md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-neura-line bg-neura-card text-neura-text shadow-sm transition-colors hover:border-neura-secondary/30 hover:bg-neura-secondary/10 hover:text-neura-secondary md:hidden"
             aria-label="Abrir menu"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -71,14 +78,14 @@ export default function MarketingShell({ children }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.2 }}
-              className="border-t border-slate-100 bg-white px-4 py-4 md:hidden"
+              className="border-t border-neura-line bg-neura-card px-4 py-4 md:hidden"
             >
               <div className="flex flex-col gap-2">
                 {navItems.map((item) => (
                   <button
                     key={item.to}
                     onClick={() => closeAndGo(item.to)}
-                    className="rounded-2xl px-4 py-3 text-left text-sm font-semibold text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-700"
+                    className="rounded-2xl px-4 py-3 text-left text-sm font-semibold text-neura-muted transition-colors hover:bg-neura-primary/10 hover:text-teal-700"
                   >
                     {item.label}
                   </button>
@@ -99,15 +106,15 @@ export default function MarketingShell({ children }) {
 
       <main>{children}</main>
 
-      <footer className="border-t border-slate-100 bg-slate-950 px-4 py-10 sm:px-6 lg:px-8">
+      <footer className="border-t border-neura-line bg-white px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <BrandLogo onClick={() => navigate('/')} light markClassName="shadow-none" />
-          <p className="text-sm text-slate-400">© 2026 Neura. Todos os direitos reservados.</p>
-          <div className="flex flex-wrap gap-5 text-sm text-slate-400">
-            {['Privacidade', 'Termos', 'Contacto'].map((label) => (
-              <a key={label} href="#" className="transition-colors hover:text-white">
-                {label}
-              </a>
+          <BrandLogo onClick={() => navigate('/')} markClassName="shadow-none" />
+          <p className="text-sm text-neura-muted">© 2026 Neura. Todos os direitos reservados.</p>
+          <div className="flex flex-wrap gap-5 text-sm text-neura-muted">
+            {footerLinks.map((item) => (
+              <NavLink key={item.to} to={item.to} className="transition-colors hover:text-teal-700">
+                {item.label}
+              </NavLink>
             ))}
           </div>
         </div>

@@ -25,7 +25,7 @@ export default function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(135deg,#EEF2FF_0%,#F8FAFF_52%,#F5F3FF_100%)] px-4 py-6 text-slate-950 sm:px-6">
+    <div className="min-h-screen bg-neura-hero px-4 py-6 text-neura-text sm:px-6">
       <div className="mx-auto flex min-h-[calc(100vh-48px)] max-w-7xl flex-col">
         <BrandLogo onClick={() => navigate('/')} />
 
@@ -40,10 +40,10 @@ export default function OnboardingPage() {
               <SectionBadge tone="violet" icon={ShieldCheck} className="justify-center">
                 Primeiro passo
               </SectionBadge>
-              <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-normal text-slate-950 sm:text-5xl">
+              <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-normal text-neura-text sm:text-5xl">
                 Como gostarias de começar?
               </h1>
-              <p className="mt-4 text-base leading-7 text-slate-500">Escolhe o formato que deixa este momento mais confortável para ti.</p>
+              <p className="mt-4 text-base leading-7 text-neura-muted">Escolhe o formato que deixa este momento mais confortável para ti.</p>
             </div>
 
             <div className="mt-10 grid gap-4 md:grid-cols-2">
@@ -54,24 +54,24 @@ export default function OnboardingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.08 }}
                   onClick={() => navigate(to)}
-                  className="group rounded-3xl border p-6 text-left shadow-neura transition-all hover:-translate-y-1 hover:shadow-xl"
+                  className="group rounded-3xl border border-neura-line bg-white p-6 text-left shadow-neura transition-all hover:-translate-y-1 hover:shadow-xl"
                   style={featured ? { background: BRAND.gradient, borderColor: 'transparent' } : undefined}
                 >
                   <div className="flex items-start gap-4">
-                    <span className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl ${featured ? 'bg-white/15 text-white' : 'bg-blue-50 text-blue-600'}`}>
+                    <span className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl ${featured ? 'bg-white/15 text-white' : 'bg-neura-primary/10 text-neura-primary'}`}>
                       <Icon size={24} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h2 className={`text-lg font-bold ${featured ? 'text-white' : 'text-slate-950'}`}>{title}</h2>
-                      <p className={`mt-2 text-sm leading-6 ${featured ? 'text-blue-100' : 'text-slate-500'}`}>{text}</p>
+                      <h2 className={`text-lg font-bold ${featured ? 'text-white' : 'text-neura-text'}`}>{title}</h2>
+                      <p className={`mt-2 text-sm leading-6 ${featured ? 'text-white/85' : 'text-neura-muted'}`}>{text}</p>
                     </div>
-                    <ArrowRight className={`mt-1 flex-shrink-0 transition-transform group-hover:translate-x-1 ${featured ? 'text-white/80' : 'text-blue-600'}`} size={20} />
+                    <ArrowRight className={`mt-1 flex-shrink-0 transition-transform group-hover:translate-x-1 ${featured ? 'text-white/80' : 'text-neura-primary'}`} size={20} />
                   </div>
                 </motion.button>
               ))}
             </div>
 
-            <p className="mt-8 text-center text-sm font-medium text-slate-400">Podes mudar de modo a qualquer momento.</p>
+            <p className="mt-8 text-center text-sm font-medium text-neura-muted">Podes mudar de modo a qualquer momento.</p>
           </motion.div>
         </main>
       </div>

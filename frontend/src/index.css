@@ -1,26 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --neura-primary: #2DD4BF;
+    --neura-secondary: #60A5FA;
+    --neura-accent: #C084FC;
+    --neura-accent-2: #FDBA74;
+    --neura-bg: #F8FFFE;
+    --neura-card: #FFFFFF;
+    --neura-text: #334155;
+    --neura-muted: #64748B;
+    --neura-line: #CCFBF1;
+    --neura-success: #22C55E;
+    --neura-warning: #F59E0B;
+    --neura-error: #EF4444;
+    --neura-info: #38BDF8;
+  }
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #F8FAFF;
-    color: #0f172a;
+    background-color: #F8FFFE;
+    color: #334155;
+    line-height: 1.65;
+    letter-spacing: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: 0;
+    color: #334155;
+  }
+
+  h1 {
+    font-weight: 800;
+  }
+
+  button, input, textarea, select {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   ::-webkit-scrollbar {
@@ -28,7 +63,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #F8FAFF;
+    background: #F8FFFE;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -37,42 +72,61 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: #2DD4BF;
   }
 
   ::selection {
-    background-color: #DBEAFE;
-    color: #172554;
+    background-color: #C084FC;
+    color: #FFFFFF;
   }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center
-           bg-gradient-to-r from-neura-600 to-violet-600 text-white px-6 py-3 rounded-full font-semibold
+           bg-gradient-to-r from-teal-400 to-cyan-400 text-white px-6 py-3 rounded-full font-semibold
            active:scale-95 transition-all duration-200 shadow-xl
-           hover:scale-105 hover:shadow-blue-500/30;
+           hover:scale-105 hover:shadow-teal-400/30;
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center
-           bg-white text-slate-700 px-6 py-3 rounded-full font-semibold
-           border border-slate-200 hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50
+           bg-neura-card text-neura-text px-6 py-3 rounded-full font-semibold
+           border border-neura-line hover:border-neura-secondary hover:text-teal-700 hover:bg-neura-accent/10
            active:scale-95 transition-all duration-200;
   }
 
   .card {
-    @apply bg-white rounded-3xl p-6
-           border border-slate-100 shadow-neura hover:shadow-xl
+    @apply bg-neura-card rounded-3xl p-6
+           border border-neura-line shadow-neura hover:shadow-xl
            transition-all duration-300;
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-neura-600 to-violet-600 
+    @apply bg-gradient-to-r from-neura-primary to-neura-secondary
            bg-clip-text text-transparent;
   }
 
   .glass {
-    @apply bg-white/80 backdrop-blur-xl border border-white/60;
+    @apply bg-white/75 backdrop-blur-xl border border-white/70 shadow-neura;
+  }
+
+  .bg-neura-hero {
+    background:
+      radial-gradient(circle at top left, rgba(45, 212, 191, 0.18), transparent 34%),
+      radial-gradient(circle at top right, rgba(96, 165, 250, 0.16), transparent 30%),
+      linear-gradient(135deg, #F8FFFE 0%, #F0FDFA 52%, #EFF6FF 100%);
+  }
+
+  .bg-neura-section {
+    background: linear-gradient(135deg, #ECFEFF 0%, #FFFFFF 48%, #FAF5FF 100%);
+  }
+
+  .surface-card {
+    @apply rounded-3xl border border-neura-line bg-white shadow-neura transition-all duration-300;
+  }
+
+  .input-soft {
+    @apply rounded-2xl border border-neura-line bg-white px-4 py-3 text-sm text-neura-text outline-none transition-all placeholder:text-neura-muted focus:border-neura-primary focus:ring-4 focus:ring-teal-100;
   }
 }

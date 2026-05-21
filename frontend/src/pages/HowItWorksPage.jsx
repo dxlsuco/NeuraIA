@@ -30,7 +30,7 @@ export default function HowItWorksPage() {
 
   return (
     <MarketingShell>
-      <section className="bg-[linear-gradient(135deg,#EEF2FF_0%,#F8FAFF_52%,#F0FDFA_100%)] py-20">
+      <section className="bg-neura-hero py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -41,10 +41,10 @@ export default function HowItWorksPage() {
             <SectionBadge icon={Sparkles} tone="blue" className="justify-center">
               Como funciona
             </SectionBadge>
-            <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-normal text-slate-950 lg:text-6xl">
+            <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-normal text-neura-text lg:text-6xl">
               Começar deve ser simples, mesmo num dia difícil.
             </h1>
-            <p className="mt-5 text-lg leading-8 text-slate-500">
+            <p className="mt-5 text-lg leading-8 text-neura-muted">
               A experiência foi desenhada para te levar do primeiro check-in ao apoio certo com o mínimo de fricção.
             </p>
           </motion.div>
@@ -56,39 +56,39 @@ export default function HowItWorksPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.08 }}
-                className="rounded-3xl border border-slate-100 bg-white p-7 shadow-neura transition-all hover:-translate-y-1 hover:shadow-xl"
+                className="rounded-3xl border border-neura-line bg-neura-card p-7 shadow-neura transition-all hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="mb-8 flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-neura-primary/10 text-neura-primary">
                     <Icon size={23} />
                   </div>
-                  <span className="text-5xl font-extrabold leading-none text-blue-100">{number}</span>
+                  <span className="text-5xl font-extrabold leading-none text-neura-primary/25">{number}</span>
                 </div>
-                <h2 className="text-lg font-bold text-slate-950">{title}</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-500">{text}</p>
+                <h2 className="text-lg font-bold text-neura-text">{title}</h2>
+                <p className="mt-3 text-[15px] leading-7 text-neura-muted">{text}</p>
               </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-y border-slate-100 bg-white py-20">
+      <section className="border-y border-neura-line bg-neura-card py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-2">
             {['Privado', 'Imediato', 'Humano quando necessário'].map((item) => (
-              <span key={item} className="inline-flex items-center gap-2 rounded-full border border-slate-100 bg-[#F8FAFF] px-4 py-2 text-sm font-semibold text-slate-600">
-                <CheckCircle2 className="text-teal-600" size={15} />
+              <span key={item} className="inline-flex items-center gap-2 rounded-full border border-neura-line bg-neura-bg px-4 py-2 text-sm font-semibold text-neura-muted">
+                <CheckCircle2 className="text-neura-success" size={15} />
                 {item}
               </span>
             ))}
           </div>
-          <h2 className="mt-7 text-3xl font-extrabold tracking-normal text-slate-950 sm:text-4xl">Experimenta o primeiro passo.</h2>
+          <h2 className="mt-7 text-3xl font-extrabold tracking-normal text-neura-text sm:text-4xl">Experimenta o primeiro passo.</h2>
           <PrimaryButton onClick={() => navigate('/check-in')} className="mt-8 px-7 py-4">
             Fazer check-in
           </PrimaryButton>
           <button
             onClick={() => navigate('/recursos')}
-            className="ml-0 mt-3 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-slate-500 transition-colors hover:text-violet-600 sm:ml-3"
+            className="ml-0 mt-3 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-neura-muted transition-colors hover:text-neura-secondary sm:ml-3"
           >
             Ver recursos
             <ArrowRight size={15} />
